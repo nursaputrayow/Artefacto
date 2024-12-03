@@ -4,105 +4,80 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.delay
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
+import androidx.compose.runtime.LaunchedEffect
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import com.nursaputrayow.artefacto.screen.LoginScreen
+import com.nursaputrayow.artefacto.viewmodel.SplashScreenViewModel
+import com.nursaputrayow.artefacto.screen.OnboardingScreen
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.painterResource
+import com.nursaputrayow.artefacto.ui.theme.ArtefactoTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-
         setContent {
-            AppTheme {
-                SplashScreenContent()
+            ArtefactoTheme {
+                val navController = rememberNavController()
+                AppNavigation(navController)
             }
         }
     }
 }
 
 @Composable
-fun SplashScreenContent() {
-    var isLoading by remember { mutableStateOf(true) }
-
-    LaunchedEffect(Unit) {
-        delay(1500)
-
-        performAppInitialization()
-
-        isLoading = false
-    }
-
-    if (isLoading) {
-        SplashScreen()
-    } else {
-        MainAppContent()
-    }
-}
-
-@Composable
-fun SplashScreen() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
+fun AppNavigation(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = AppRoutes.Splash
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
-            contentAlignment = Alignment.Center
-        ) {
-            Image(
-                painter = painterResource(id = R.drawable.logo),
-                contentDescription = "App Logo",
-                modifier = Modifier
-                    .fillMaxSize(0.5f)
+        composable(AppRoutes.Splash) {
+            SplashScreenContent(
+                onNavigateToOnboarding = { navController.navigate(AppRoutes.Onboarding) }
             )
+        }
+        composable(AppRoutes.Onboarding) {
+            OnboardingScreen(
+                onNavigateToLogin = { navController.navigate(AppRoutes.Login) }
+            )
+        }
+        composable(AppRoutes.Login) {
+            LoginScreen()
         }
     }
 }
 
 @Composable
-fun MainAppContent() {
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) { }
-}
+fun SplashScreenContent(
+    viewModel: SplashScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
+    onNavigateToOnboarding: () -> Unit
+) {
+    val isLoading by viewModel.isLoading.collectAsState()
 
-private suspend fun performAppInitialization() {
-    // Perform any necessary initialization:
-    // - Check authentication
-    // - Load initial data
-    // - Perform network calls
-    // - Set up dependencies
-    delay(500)
+    if (isLoading) {
+        SplashScreen()
+    } else {
+        LaunchedEffect(Unit) {
+            onNavigateToOnboarding()
+        }
+    }
 }
 
 @Composable
-fun AppTheme(
-    content: @Composable () -> Unit
-) {
-    MaterialTheme(
-        colorScheme = MaterialTheme.colorScheme.copy(
-            primary = Color(0xFF6200EE),
-            secondary = Color(0xFF03DAC6)
-        ),
-        content = content
-    )
+fun SplashScreen() {
+    androidx.compose.material3.Surface(
+        color = MaterialTheme.colorScheme.background
+    ) {
+        androidx.compose.foundation.Image(
+            painter = painterResource(id = R.drawable.logo),
+            contentDescription = "App Logo"
+        )
+    }
 }
