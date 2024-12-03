@@ -1,57 +1,35 @@
 package com.nursaputrayow.artefacto.screen
 
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.nursaputrayow.artefacto.R
-
-class OnboardingActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            OnboardingScreen()
-        }
-    }
-}
+import com.nursaputrayow.artefacto.viewmodel.OnboardingViewModel
 
 @Composable
-fun OnboardingScreen() {
-    var currentStep by remember { mutableIntStateOf(0) }
+fun OnboardingScreen(
+    onNavigateToLogin: () -> Unit,
+    viewModel: OnboardingViewModel = viewModel()
+) {
+    val currentStep by viewModel.currentStep.collectAsState()
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = MaterialTheme.colorScheme.background
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(16.dp),
+            modifier = Modifier.fillMaxSize(),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
@@ -61,7 +39,11 @@ fun OnboardingScreen() {
 
             Button(
                 onClick = {
-                    currentStep = (currentStep + 1) % 3
+                    if (currentStep == 2) {
+                        onNavigateToLogin()
+                    } else {
+                        viewModel.nextStep()
+                    }
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
@@ -73,35 +55,16 @@ fun OnboardingScreen() {
 
 @Composable
 fun OnboardingContent(step: Int) {
-    val onboardingData = listOf(
-        Triple("Discover the Past", "Explore the rich history and cultural heritage of the Prambanan Temple.", R.drawable.background),
-        Triple("Scan Artifacts", "Use your device to scan and learn about the fascinating historical treasures.", R.drawable.background),
-        Triple("Book Your Ticket", "Plan your visit and secure your ticket to the Prambanan Temple.", R.drawable.background)
-    )
-
-    val (title, description, image) = onboardingData[step]
-
-    AnimatedVisibility(
-        visible = step == 0,
-        enter = fadeIn(animationSpec = tween(500)),
-        exit = fadeOut(animationSpec = tween(500))
-    ) {
-        OnboardingStep(title, description, image)
+    val onboardingData = remember {
+        listOf(
+            Triple("Discover the Past", "Explore the history of Prambanan Temple.", R.drawable.background),
+            Triple("Scan Artifacts", "Scan and learn about historical treasures.", R.drawable.background),
+            Triple("Book Your Ticket", "Plan your visit and book tickets.", R.drawable.background)
+        )
     }
 
-    AnimatedVisibility(
-        visible = step == 1,
-        enter = fadeIn(animationSpec = tween(500)),
-        exit = fadeOut(animationSpec = tween(500))
-    ) {
-        OnboardingStep(title, description, image)
-    }
-
-    AnimatedVisibility(
-        visible = step == 2,
-        enter = fadeIn(animationSpec = tween(500)),
-        exit = fadeOut(animationSpec = tween(500))
-    ) {
+    Crossfade(targetState = step, animationSpec = androidx.compose.animation.core.tween(300)) { currentStep ->
+        val (title, description, image) = onboardingData[currentStep]
         OnboardingStep(title, description, image)
     }
 }
@@ -127,9 +90,7 @@ fun OnboardingStep(
 
         Text(
             text = title,
-            style = MaterialTheme.typography.headlineLarge.copy(
-                fontWeight = FontWeight.Bold
-            )
+            style = MaterialTheme.typography.headlineLarge.copy(fontWeight = FontWeight.Bold)
         )
 
         Spacer(modifier = Modifier.height(16.dp))
