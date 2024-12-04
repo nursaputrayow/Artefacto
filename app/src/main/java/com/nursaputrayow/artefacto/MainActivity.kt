@@ -48,7 +48,9 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(AppRoutes.Onboarding) {
             OnboardingScreen(
-                onNavigateToLogin = { navController.navigate(AppRoutes.Login) }
+                onNavigateToLogin = {
+                    navController.navigate(AppRoutes.Login)
+                }
             )
         }
         composable(AppRoutes.Login) {
