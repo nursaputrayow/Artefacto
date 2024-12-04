@@ -17,6 +17,7 @@ import com.nursaputrayow.artefacto.screen.OnboardingScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
+import com.nursaputrayow.artefacto.screen.RegisterScreen
 import com.nursaputrayow.artefacto.ui.theme.ArtefactoTheme
 
 class MainActivity : ComponentActivity() {
@@ -50,6 +51,9 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(AppRoutes.Login) {
             LoginScreen()
+        }
+        composable(AppRoutes.Register) {
+            RegisterScreen()
         }
     }
 }
