@@ -15,6 +15,7 @@ class SplashScreenViewModel : ViewModel() {
         viewModelScope.launch {
             performAppInitialization()
             _isLoading.value = false
+            android.util.Log.d("SplashScreen", "App initialization complete")
         }
     }
 
