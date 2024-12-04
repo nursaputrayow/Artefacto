@@ -55,7 +55,9 @@ fun AppNavigation(navController: NavHostController) {
         }
         composable(AppRoutes.Login) {
             LoginScreen(
-                onNavigateToRegister = { navController.navigate(AppRoutes.Register) }
+                onNavigateToRegister = {
+                    navController.navigate(AppRoutes.Register)
+                }
             )
         }
         composable(AppRoutes.Register) {
