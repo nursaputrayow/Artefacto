@@ -41,7 +41,9 @@ fun AppNavigation(navController: NavHostController) {
     ) {
         composable(AppRoutes.Splash) {
             SplashScreenContent(
-                onNavigateToOnboarding = { navController.navigate(AppRoutes.Onboarding) }
+                onNavigateToOnboarding = {
+                    navController.navigate(AppRoutes.Onboarding)
+                }
             )
         }
         composable(AppRoutes.Onboarding) {
