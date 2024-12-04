@@ -1,18 +1,33 @@
 package com.nursaputrayow.artefacto.screen
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Button
 
 @Composable
-fun LoginScreen() {
+fun LoginScreen(onNavigateToRegister: () -> Unit) {
     Box(
         modifier = Modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Login Screen")
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(text = "Login Screen")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(onClick = onNavigateToRegister) {
+                Text("Register")
+            }
+        }
     }
 }
