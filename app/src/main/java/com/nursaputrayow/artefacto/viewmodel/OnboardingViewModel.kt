@@ -13,4 +13,8 @@ class OnboardingViewModel : ViewModel() {
             _currentStep.value++
         }
     }
+
+    fun resetSteps() {
+        _currentStep.value = 0
+    }
 }
