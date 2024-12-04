@@ -59,6 +59,7 @@ fun AppNavigation(navController: NavHostController) {
             LoginScreen(
                 onNavigateToRegister = {
                     navController.navigate(AppRoutes.Register)
+                    android.util.Log.d("Navigation", "LoginScreen")
                 }
             )
         }
