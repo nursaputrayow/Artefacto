@@ -12,7 +12,9 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun RegisterScreen(onNavigateToLogin: () -> Unit) {
+fun RegisterScreen(
+    onNavigateToLogin: () -> Unit
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
@@ -132,7 +134,7 @@ fun RegisterScreen(onNavigateToLogin: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Login Navigation Button
-            Button(onClick = onNavigateToLogin) {
+            TextButton(onClick = onNavigateToLogin) {
                 Text("Already have an account? Login")
             }
         }

@@ -12,7 +12,10 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun LoginScreen(onNavigateToRegister: () -> Unit) {
+fun LoginScreen(
+    onNavigateToRegister: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit
+) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
@@ -105,9 +108,16 @@ fun LoginScreen(onNavigateToRegister: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Register Button
-            Button(onClick = onNavigateToRegister) {
+            // Register Navigation Button
+            TextButton(onClick = onNavigateToRegister) {
                 Text("Don't have an account? Register")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Forgot Password Button
+            TextButton(onClick = onNavigateToForgotPassword) {
+                Text("Forgot Password?")
             }
         }
     }
