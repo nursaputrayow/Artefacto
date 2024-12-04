@@ -43,6 +43,7 @@ fun AppNavigation(navController: NavHostController) {
             SplashScreenContent(
                 onNavigateToOnboarding = {
                     navController.navigate(AppRoutes.Onboarding)
+                    android.util.Log.d("Navigation", "SplashScreen")
                 }
             )
         }
