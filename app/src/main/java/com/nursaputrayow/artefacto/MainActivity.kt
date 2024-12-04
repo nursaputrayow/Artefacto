@@ -64,7 +64,9 @@ fun AppNavigation(navController: NavHostController) {
             )
         }
         composable(AppRoutes.Register) {
-            RegisterScreen()
+            RegisterScreen(
+
+            )
         }
     }
 }
