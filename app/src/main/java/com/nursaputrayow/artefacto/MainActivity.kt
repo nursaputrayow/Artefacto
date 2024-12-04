@@ -51,6 +51,7 @@ fun AppNavigation(navController: NavHostController) {
             OnboardingScreen(
                 onNavigateToLogin = {
                     navController.navigate(AppRoutes.Login)
+                    android.util.Log.d("Navigation", "OnboardingScreen")
                 }
             )
         }
