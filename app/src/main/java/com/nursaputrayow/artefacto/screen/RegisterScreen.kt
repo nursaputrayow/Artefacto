@@ -37,7 +37,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Username input
             BasicTextField(
                 value = username,
                 onValueChange = { username = it },
@@ -59,7 +58,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Password input
             BasicTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -82,7 +80,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Confirm Password input
             BasicTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
@@ -105,7 +102,6 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display error message if any
             errorMessage?.let {
                 Text(
                     text = it,
@@ -115,7 +111,6 @@ fun RegisterScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Register Button
             Button(
                 onClick = {
                     if (username.isBlank() || password.isBlank() || confirmPassword.isBlank()) {
@@ -124,7 +119,6 @@ fun RegisterScreen(
                         errorMessage = "Passwords do not match"
                     } else {
                         errorMessage = null
-                        // Handle registration logic
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -134,14 +128,12 @@ fun RegisterScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Login Navigation Button
             TextButton(onClick = onNavigateToLogin) {
                 Text("Already have an account? Login")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Forgot Password Button
             TextButton(onClick = onNavigateToForgotPassword) {
                 Text("Forgot Password?")
             }
