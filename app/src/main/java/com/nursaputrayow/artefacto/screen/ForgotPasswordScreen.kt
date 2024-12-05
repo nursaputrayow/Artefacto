@@ -11,7 +11,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun ForgotPasswordScreen(onNavigateToChangePassword: () -> Unit) {
+fun ForgotPasswordScreen(
+    onNavigateToChangePassword: () -> Unit,
+    onNavigateToLogin: () -> Unit
+) {
     var email by remember { mutableStateOf("") }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -82,7 +85,7 @@ fun ForgotPasswordScreen(onNavigateToChangePassword: () -> Unit) {
             Spacer(modifier = Modifier.height(16.dp))
 
             // Navigate to Login
-            TextButton(onClick = onNavigateToChangePassword) {
+            TextButton(onClick = onNavigateToLogin) {
                 Text("Back to Login")
             }
         }
