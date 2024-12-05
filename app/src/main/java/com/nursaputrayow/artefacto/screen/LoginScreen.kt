@@ -36,7 +36,6 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Username input
             BasicTextField(
                 value = username,
                 onValueChange = { username = it },
@@ -58,7 +57,6 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Password input
             BasicTextField(
                 value = password,
                 onValueChange = { password = it },
@@ -81,7 +79,6 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display error message if any
             errorMessage?.let {
                 Text(
                     text = it,
@@ -91,14 +88,12 @@ fun LoginScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Login Button
             Button(
                 onClick = {
                     if (username.isBlank() || password.isBlank()) {
                         errorMessage = "Please fill in both fields"
                     } else {
                         errorMessage = null
-                        // Handle login logic
                     }
                 },
                 modifier = Modifier.fillMaxWidth()
@@ -108,14 +103,12 @@ fun LoginScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Register Navigation Button
             TextButton(onClick = onNavigateToRegister) {
                 Text("Don't have an account? Register")
             }
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Forgot Password Button
             TextButton(onClick = onNavigateToForgotPassword) {
                 Text("Forgot Password?")
             }
