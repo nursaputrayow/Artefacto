@@ -33,7 +33,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // New Password input
             BasicTextField(
                 value = newPassword,
                 onValueChange = { newPassword = it },
@@ -56,7 +55,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Confirm Password input
             BasicTextField(
                 value = confirmPassword,
                 onValueChange = { confirmPassword = it },
@@ -79,7 +77,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display error message if any
             errorMessage?.let {
                 Text(
                     text = it,
@@ -89,7 +86,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Submit button to change password
             Button(
                 onClick = {
                     if (newPassword.isBlank() || confirmPassword.isBlank()) {
@@ -98,7 +94,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
                         errorMessage = "Passwords do not match"
                     } else {
                         errorMessage = null
-                        // Handle change password logic (e.g., update password)
                         onNavigateToLogin()
                     }
                 },
@@ -109,7 +104,6 @@ fun ChangePasswordScreen(onNavigateToLogin: () -> Unit) {
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Navigate to Login
             TextButton(onClick = onNavigateToLogin) {
                 Text("Back to Login")
             }
