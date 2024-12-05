@@ -5,6 +5,7 @@ object AppRoutes {
     const val Onboarding = "onboarding"
     const val Login = "login"
     const val Register = "register"
+    const val ForgotPassword = "ForgotPassword"
 
     fun isValidRoute(route: String): Boolean {
         return route in listOf(Splash, Onboarding, Login, Register)
