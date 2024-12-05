@@ -34,7 +34,6 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(32.dp))
 
-            // Email input
             BasicTextField(
                 value = email,
                 onValueChange = { email = it },
@@ -56,7 +55,6 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display error message if any
             errorMessage?.let {
                 Text(
                     text = it,
@@ -66,14 +64,12 @@ fun ForgotPasswordScreen(
                 Spacer(modifier = Modifier.height(8.dp))
             }
 
-            // Submit button to send reset link
             Button(
                 onClick = {
                     if (email.isBlank()) {
                         errorMessage = "Please enter your email"
                     } else {
                         errorMessage = null
-                        // Handle password reset logic (e.g., send email with reset link)
                         onNavigateToChangePassword()
                     }
                 },
@@ -84,7 +80,6 @@ fun ForgotPasswordScreen(
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Navigate to Login
             TextButton(onClick = onNavigateToLogin) {
                 Text("Back to Login")
             }
