@@ -13,7 +13,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun RegisterScreen(
-    onNavigateToLogin: () -> Unit
+    onNavigateToLogin: () -> Unit,
+    onNavigateToForgotPassword: () -> Unit
 ) {
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -136,6 +137,13 @@ fun RegisterScreen(
             // Login Navigation Button
             TextButton(onClick = onNavigateToLogin) {
                 Text("Already have an account? Login")
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Forgot Password Button
+            TextButton(onClick = onNavigateToForgotPassword) {
+                Text("Forgot Password?")
             }
         }
     }
