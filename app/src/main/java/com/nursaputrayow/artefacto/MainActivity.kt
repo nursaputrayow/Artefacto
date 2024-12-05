@@ -17,7 +17,10 @@ import com.nursaputrayow.artefacto.screen.OnboardingScreen
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
+import com.nursaputrayow.artefacto.screen.ChangePasswordScreen
+import com.nursaputrayow.artefacto.screen.ForgotPasswordScreen
 import com.nursaputrayow.artefacto.screen.RegisterScreen
+import com.nursaputrayow.artefacto.screen.SplashScreenContent
 import com.nursaputrayow.artefacto.ui.theme.ArtefactoTheme
 
 class MainActivity : ComponentActivity() {
@@ -60,41 +63,44 @@ fun AppNavigation(navController: NavHostController) {
                 onNavigateToRegister = {
                     navController.navigate(AppRoutes.Register)
                     android.util.Log.d("Navigation", "LoginScreen")
+                },
+                onNavigateToForgotPassword = {
+                    navController.navigate(AppRoutes.ForgotPassword)
+                    android.util.Log.d("Navigation", "ForgotPassword")
                 }
             )
         }
         composable(AppRoutes.Register) {
             RegisterScreen(
-
+                onNavigateToLogin = {
+                    navController.navigate(AppRoutes.Login)
+                    android.util.Log.d("Navigation", "RegisterScreen")
+                },
+                onNavigateToForgotPassword = {
+                    navController.navigate(AppRoutes.ForgotPassword)
+                    android.util.Log.d("Navigation", "ForgotPassword")
+                }
             )
         }
-    }
-}
-
-@Composable
-fun SplashScreenContent(
-    viewModel: SplashScreenViewModel = androidx.lifecycle.viewmodel.compose.viewModel(),
-    onNavigateToOnboarding: () -> Unit
-) {
-    val isLoading by viewModel.isLoading.collectAsState()
-
-    if (isLoading) {
-        SplashScreen()
-    } else {
-        LaunchedEffect(Unit) {
-            onNavigateToOnboarding()
+        composable(AppRoutes.ForgotPassword) {
+            ForgotPasswordScreen(
+                onNavigateToChangePassword = {
+                    navController.navigate(AppRoutes.ChangePassword)
+                    android.util.Log.d("Navigation", "ForgotPasswordScreen")
+                },
+                onNavigateToLogin = {
+                    navController.navigate(AppRoutes.Login)
+                    android.util.Log.d("Navigation", "ChangePasswordScreen")
+                }
+            )
         }
-    }
-}
-
-@Composable
-fun SplashScreen() {
-    androidx.compose.material3.Surface(
-        color = MaterialTheme.colorScheme.background
-    ) {
-        androidx.compose.foundation.Image(
-            painter = painterResource(id = R.drawable.logo),
-            contentDescription = "App Logo"
-        )
+        composable(AppRoutes.ChangePassword) {
+            ChangePasswordScreen(
+                onNavigateToLogin = {
+                    navController.navigate(AppRoutes.Login)
+                    android.util.Log.d("Navigation", "ChangePasswordScreen")
+                }
+            )
+        }
     }
 }
