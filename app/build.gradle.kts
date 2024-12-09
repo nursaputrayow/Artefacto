@@ -6,7 +6,7 @@ plugins {
 
 android {
     namespace = "com.nursaputrayow.artefacto"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.nursaputrayow.artefacto"
