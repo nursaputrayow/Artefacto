@@ -4,17 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.compose.runtime.Composable
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
+import androidx.compose.runtime.Composable
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.nursaputrayow.artefacto.screen.LoginScreen
 import com.nursaputrayow.artefacto.screen.OnboardingScreen
-import com.nursaputrayow.artefacto.screen.ChangePasswordScreen
-import com.nursaputrayow.artefacto.screen.ForgotPasswordScreen
 import com.nursaputrayow.artefacto.screen.RegisterScreen
-import com.nursaputrayow.artefacto.screen.SplashScreenContent
 import com.nursaputrayow.artefacto.ui.theme.ArtefactoTheme
 
 class MainActivity : ComponentActivity() {
@@ -23,76 +19,43 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             ArtefactoTheme {
-                val navController = rememberNavController()
-                AppNavigation(navController)
+                ArtefactoApp()
             }
         }
     }
 }
 
 @Composable
-fun AppNavigation(navController: NavHostController) {
+fun ArtefactoApp() {
+    val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = AppRoutes.Splash
+        startDestination = "onboarding"
     ) {
-        composable(AppRoutes.Splash) {
-            SplashScreenContent(
-                onNavigateToOnboarding = {
-                    navController.navigate(AppRoutes.Onboarding)
-                    android.util.Log.d("Navigation", "SplashScreen")
-                }
-            )
-        }
-        composable(AppRoutes.Onboarding) {
+        composable("onboarding") {
             OnboardingScreen(
-                onNavigateToLogin = {
-                    navController.navigate(AppRoutes.Login)
-                    android.util.Log.d("Navigation", "OnboardingScreen")
+                onLoginScreen = {
+                    navController.navigate("login") {
+                        popUpTo("login") { inclusive = true }
+                    }
                 }
             )
         }
-        composable(AppRoutes.Login) {
-            LoginScreen(
-                onNavigateToRegister = {
-                    navController.navigate(AppRoutes.Register)
-                    android.util.Log.d("Navigation", "LoginScreen")
-                },
-                onNavigateToForgotPassword = {
-                    navController.navigate(AppRoutes.ForgotPassword)
-                    android.util.Log.d("Navigation", "ForgotPassword")
-                }
-            )
-        }
-        composable(AppRoutes.Register) {
+        composable("register") {
             RegisterScreen(
-                onNavigateToLogin = {
-                    navController.navigate(AppRoutes.Login)
-                    android.util.Log.d("Navigation", "RegisterScreen")
-                },
-                onNavigateToForgotPassword = {
-                    navController.navigate(AppRoutes.ForgotPassword)
-                    android.util.Log.d("Navigation", "ForgotPassword")
+                onLoginScreen = {
+                    navController.navigate("login") {
+                        popUpTo("login") { inclusive = true }
+                    }
                 }
             )
         }
-        composable(AppRoutes.ForgotPassword) {
-            ForgotPasswordScreen(
-                onNavigateToChangePassword = {
-                    navController.navigate(AppRoutes.ChangePassword)
-                    android.util.Log.d("Navigation", "ForgotPasswordScreen")
-                },
-                onNavigateToLogin = {
-                    navController.navigate(AppRoutes.Login)
-                    android.util.Log.d("Navigation", "ChangePasswordScreen")
-                }
-            )
-        }
-        composable(AppRoutes.ChangePassword) {
-            ChangePasswordScreen(
-                onNavigateToLogin = {
-                    navController.navigate(AppRoutes.Login)
-                    android.util.Log.d("Navigation", "ChangePasswordScreen")
+        composable("login") {
+            LoginScreen(
+                onRegisterScreen = {
+                    navController.navigate("register") {
+                        popUpTo("register") { inclusive = true }
+                    }
                 }
             )
         }
