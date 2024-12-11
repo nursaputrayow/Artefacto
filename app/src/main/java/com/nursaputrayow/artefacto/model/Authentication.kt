@@ -8,6 +8,11 @@ data class RegisterRequest(
     val password_confirmation: String
 )
 
+data class LoginRequest(
+    val phone: String,
+    val password: String,
+)
+
 data class RegisterResponse(
     val status: String,
     val message: String,
@@ -16,12 +21,14 @@ data class RegisterResponse(
 
 data class UserData(
     val user: User,
-    val verification_code: String?
+    val verification_code: String?,
+    val token: String?
 )
 
 data class User(
     val id: Int,
     val name: String,
+    val role: String?,
     val phone: String,
     val email: String,
     val created_at: String,
