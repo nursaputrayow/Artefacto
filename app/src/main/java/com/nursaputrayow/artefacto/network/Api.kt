@@ -1,5 +1,6 @@
 package com.nursaputrayow.artefacto.network
 
+import com.nursaputrayow.artefacto.model.LoginRequest
 import com.nursaputrayow.artefacto.model.RegisterRequest
 import com.nursaputrayow.artefacto.model.RegisterResponse
 import retrofit2.http.Body
@@ -9,4 +10,6 @@ import retrofit2.Response
 interface AuthApi {
     @POST("register")
     suspend fun register(@Body request: RegisterRequest): Response<RegisterResponse>
+    @POST("login")
+    suspend fun login(@Body request: LoginRequest): Response<RegisterResponse>
 }
