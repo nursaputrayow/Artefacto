@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -30,6 +31,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.zIndex
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleEventObserver
 import com.nursaputrayow.artefacto.model.RegisterRequest
@@ -133,6 +135,12 @@ fun RegisterScreen(
             val response = api.register(request)
             if (response.isSuccessful && response.body()?.status == "success") {
                 Toast.makeText(context, response.body()?.message, Toast.LENGTH_LONG).show()
+
+                coroutineScope.launch {
+                    kotlinx.coroutines.delay(3000)
+                    onLoginScreen()
+                }
+
             } else {
                 Toast.makeText(context, "Registration failed: ${response.body()?.message}", Toast.LENGTH_LONG).show()
             }
@@ -157,24 +165,28 @@ fun RegisterScreen(
 
         if (isLoading) {
             Box(
-                contentAlignment = Alignment.Center,
-                modifier = Modifier.size(100.dp)
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(Color.Black.copy(alpha = 0.5f)) // Latar belakang redup
+                    .zIndex(1f),
+                contentAlignment = Alignment.Center
             ) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(80.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    strokeWidth = 8.dp,
+                    color = Color(0xFFD6A266),
+                    strokeWidth = 10.dp,
                     strokeCap = androidx.compose.ui.graphics.StrokeCap.Round
                 )
             }
-        } else {
-            Column(
-                modifier = Modifier
+        }
+
+        Column(
+            modifier = Modifier
                     .fillMaxSize()
                     .padding(28.dp),
-                verticalArrangement = Arrangement.Bottom,
-                horizontalAlignment = Alignment.Start
-            ) {
+            verticalArrangement = Arrangement.Bottom,
+            horizontalAlignment = Alignment.Start
+        ) {
                 Card(
                     modifier = Modifier
                         .fillMaxWidth(),
@@ -386,7 +398,7 @@ fun RegisterScreen(
                     }
                 }
             }
-        }
+
 
         Box(
             modifier = Modifier
